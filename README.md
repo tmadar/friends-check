@@ -34,14 +34,14 @@ Example responses:
 ```json
 {
     "error": true,
-    "message": "No user found with that user ID!"
+    "message": "Invalid user ID provided!"
 }
 ```
 
 ```json
 {
     "error": true,
-    "message": "Invalid data provided!"
+    "message": "No user found with that user ID!"
 }
 ```
 
@@ -96,6 +96,54 @@ Example responses:
 ```json
 {
     "success": true
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "No user found with that user ID!"
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "Invalid user ID provided!"
+}
+```
+
+### PUT '/user/:userId'
+
+Updates the user's info and updates the friendlist if necessary.
+
+The following attributes are supported for the data body:
+```
+{
+    name?: string;
+    friends?: number[];
+}
+```
+
+Example PUT body:
+```json
+{
+    "name": "Albus Dumbledor",
+    "friends": [1, 2]
+}
+```
+
+Example responses
+```json
+{
+    "success": true
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "Invalid user ID provided!"
 }
 ```
 
