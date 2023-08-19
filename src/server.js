@@ -1,8 +1,11 @@
 const friendlist = require('./friendlist.json');
 
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
 
 const isValidCreatePayload = (data) => {
   return data !== null && typeof data === 'object'
@@ -23,7 +26,7 @@ app.get('/user/:userId', (req, res) => {
   }
 
   res.status(200).send({ success: true, data: user });
-})
+});
 
 
 app.post('/user', (req, res) => {
@@ -44,8 +47,8 @@ app.post('/user', (req, res) => {
   friendlist.data.push(newUserData);
 
   res.status(200).send({ success: true });
-})
+});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
-})
+});

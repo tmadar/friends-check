@@ -37,3 +37,37 @@ Example responses:
     "message": "No user found with that user ID!"
 }
 ```
+
+### POST '/user'
+
+Insert new user to the dataset. 
+
+The following attributes are required for the data body otherwise you will receive an error:
+```
+{
+    id: string;
+    name: string;
+    friends: number[];
+}
+```
+
+Example responses:
+```json
+{
+    "success": true
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "Invalid data provided!"
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "User already exists with that ID!"
+}
+```
