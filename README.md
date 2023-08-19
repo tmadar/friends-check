@@ -10,6 +10,8 @@ Run the tagged docker container that was just built. Run `docker run -p 3000:300
 
 Pre-generated list can be found in `src/friendlist.json`
 
+![Optional Text](relationship-diagram.png)
+
 ## Endpoints
 
 ### GET '/user/:userId'
@@ -158,5 +160,54 @@ Example responses
 {
     "error": true,
     "message": "Invalid data provided!"
+}
+```
+
+### GET '/friendship-distance?user1=&user2='
+
+Returns relationship distance between 2 users
+
+Example GET request:
+```
+localhost:3000/friendship-distance?user1=1&user2=5
+```
+
+Example responses
+```json
+{
+    "success": true,
+    "data": {
+        "distance": "No relation"
+    }
+}
+```
+
+```json
+{
+    "success": true,
+    "data": {
+        "distance": "1"
+    }
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "Invalid user ID provided!"
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "No user found with user ID: 8"
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "Invalid user ID provided!"
 }
 ```

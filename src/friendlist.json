@@ -3,17 +3,47 @@
         {
             "id": 0,
             "name": "Harry Potter",
-            "friends": [1, 2]
+            "friends": [
+                1,
+                2,
+                3
+            ]
         },
         {
             "id": 1,
             "name": "Ron Weasley",
-            "friends": [0, 2]
+            "friends": [
+                0,
+                2
+            ]
         },
         {
             "id": 2,
-            "name": "Hermine Granger",
-            "friends": [0, 1]
+            "name": "Hermione Granger",
+            "friends": [
+                0,
+                1
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Sirius Black",
+            "friends": [
+                0,
+                4
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Remus Lupin",
+            "friends": [
+                3
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Mad Eye Moody",
+            "friends": []
         }
     ]
 }

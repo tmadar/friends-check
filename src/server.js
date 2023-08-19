@@ -117,7 +117,7 @@ app.put('/user/:userId', (req, res) => {
     return res.status(404).send({ error: true, message: 'No user found with that user ID!' });
   }
 
-  friendlist.data.forEach((entry, index) => { 
+  friendlist.data.forEach((entry, index) => {
     if (entry.id == userId) {
       // Updating user in the friend data list with the PUT data
       if (updatingUserData.name) {
@@ -140,6 +140,54 @@ app.put('/user/:userId', (req, res) => {
   });
 
   res.status(200).send({ success: true });
+});
+
+app.get('/friendship-distance', (req, res) => {
+  const { user1, user2 } = req.query;
+
+  if (isNaN(parseInt(user1)) || isNaN(parseInt(user2))) {
+    return res.status(400).send({ error: true, message: 'Invalid user ID provided!' });
+  }
+
+  const foundUser1 = friendlist.data.find((user) => user.id == user1);
+
+  if (!foundUser1) {
+    return res.status(404).send({ error: true, message: `No user found with user ID: ${user1}` });
+  }
+
+  const foundUser2 = friendlist.data.find((user) => user.id == user2);
+
+  if (!foundUser2) {
+    return res.status(404).send({ error: true, message: `No user found with user ID: ${user2}` });
+  }
+
+  let graph = foundUser1.friends;
+  const alreadySearched = foundUser1.friends;
+  let distance = 1;
+  let foundDistance = false;
+
+  while (graph.length > 0 || distance >= 5) {
+    if (graph.includes(foundUser2.id)) {
+      foundDistance = true;
+      break;
+    } else {
+      let newGraph = [];
+
+      graph.forEach(friendId => {
+        const tmpUser = friendlist.data.find((user) => user.id == friendId);
+        newGraph = [...newGraph, ...tmpUser.friends.filter(tmpUserFriendId => !alreadySearched.includes(tmpUserFriendId) && tmpUserFriendId !== foundUser1.id)];
+
+        if (!alreadySearched.includes(friendId)) {
+          alreadySearched.push(friendId)
+        }
+      });
+
+      graph = newGraph;
+      distance++;
+    }
+  }
+
+  res.status(200).send({ success: true, data: { distance: foundDistance ? distance : 'No relation' } });
 });
 
 app.listen(port, () => {
