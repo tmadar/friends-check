@@ -161,13 +161,14 @@ app.get('/friendship-distance', (req, res) => {
     return res.status(404).send({ error: true, message: `No user found with user ID: ${user2}` });
   }
 
-  let graph = foundUser1.friends;
-  const alreadySearched = foundUser1.friends;
+  let graph = foundUser1.friends; // Set the level 1 of the graph to be the immediate friends list of user 1
+  const alreadySearched = foundUser1.friends; // Pre-set our "searched" list to the the immediate friend list of user 1
   let distance = 1;
   let foundDistance = false;
 
   while (graph.length > 0 || distance >= 5) {
     if (graph.includes(foundUser2.id)) {
+      // we've found our relationship. Exit the loop.
       foundDistance = true;
       break;
     } else {
@@ -175,9 +176,11 @@ app.get('/friendship-distance', (req, res) => {
 
       graph.forEach(friendId => {
         const tmpUser = friendlist.data.find((user) => user.id == friendId);
+        // Our new graph will omit users we've already tried searching. Prevents cyclic search.
         newGraph = [...newGraph, ...tmpUser.friends.filter(tmpUserFriendId => !alreadySearched.includes(tmpUserFriendId) && tmpUserFriendId !== foundUser1.id)];
 
         if (!alreadySearched.includes(friendId)) {
+          // Update the "searched" list with this checked user now that we're done so we don't do the lookups on them again
           alreadySearched.push(friendId)
         }
       });
