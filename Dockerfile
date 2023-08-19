@@ -1,15 +1,13 @@
-FROM alpine:3.18
+FROM node
 
 WORKDIR app
 
-COPY package.json /
-    package-lock.json /
-    ./
+COPY package*.json ./
 
 RUN npm install
 
-COPY src ./app
+COPY . .
 
-EXPOSE 80
+EXPOSE 3000
 
-CMD ['node', 'index.js']
+CMD [ "node", "src/server.js" ]
