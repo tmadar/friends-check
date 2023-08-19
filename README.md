@@ -14,7 +14,7 @@ Pre-generated list can be found in `src/friendlist.json`
 
 ### GET '/user/:userId'
 
-Gets the user based off of their ID
+Gets the user based off of their ID.
 
 Example responses:
 ```json
@@ -38,6 +38,13 @@ Example responses:
 }
 ```
 
+```json
+{
+    "error": true,
+    "message": "Invalid data provided!"
+}
+```
+
 ### POST '/user'
 
 Insert new user to the dataset. 
@@ -45,9 +52,18 @@ Insert new user to the dataset.
 The following attributes are required for the data body otherwise you will receive an error:
 ```
 {
-    id: string;
+    id: number;
     name: string;
     friends: number[];
+}
+```
+
+Example POST body:
+```json
+{
+    "id": 4,
+    "name": "Albus Dumbledor",
+    "friends": [0, 1, 2]
 }
 ```
 
@@ -69,5 +85,30 @@ Example responses:
 {
     "error": true,
     "message": "User already exists with that ID!"
+}
+```
+
+### DELETE '/user/:userId'
+
+Remove the user from the dataset and update other associations to them.
+
+Example responses:
+```json
+{
+    "success": true
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "No user found with that user ID!"
+}
+```
+
+```json
+{
+    "error": true,
+    "message": "Invalid data provided!"
 }
 ```
